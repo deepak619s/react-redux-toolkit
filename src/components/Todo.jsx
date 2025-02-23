@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
-import { addTask, deleteTask, fetchTasks } from "../Store";
+import { addTask, deleteTask } from "../features/tasks/taskSlice";
 
 export const Todo = () => {
   const [task, setTask] = useState("");
@@ -21,11 +21,6 @@ export const Todo = () => {
   // handleTaskDelete :-
   const handleTaskDelete = (id) => {
     return dispatch(deleteTask(id));
-  };
-
-  // handleFetchTasks :-
-  const handleFetchTasks = () => {
-    return dispatch(fetchTasks());
   };
 
   return (
@@ -48,25 +43,25 @@ export const Todo = () => {
           </form>
         </div>
 
-        <button onClick={handleFetchTasks}>Fetch Tasks</button>
-
         <ul id="list-container" style={{ listStyle: "none" }}>
-          {tasks.map((curTask, index) => {
+          {tasks?.map((curTask, index) => {
             return (
               <li key={index} style={{ display: "flex" }}>
                 <p>
                   {index}: {curTask}
                 </p>
 
-                <MdDeleteForever
-                  className="icon-style"
-                  onClick={() => handleTaskDelete(index)}
-                  style={{
-                    marginLeft: "10px",
-                    marginTop: "17.3px",
-                    color: "red",
-                  }}
-                />
+                <div>
+                  <MdDeleteForever
+                    className="icon-style"
+                    onClick={() => handleTaskDelete(index)}
+                    style={{
+                      marginLeft: "10px",
+                      marginTop: "17.3px",
+                      color: "red",
+                    }}
+                  />
+                </div>
               </li>
             );
           })}
